@@ -40,9 +40,9 @@ def bootstrap_it(data, split):
     print(data_test.shape)
     return data_train, data_test
 
-# k_fold_valid(dummy_data, 10, 'medv', 'medv')
+
 # K-Fold CrossValidation
-def k_fold_valid(data, k, dep_var, drop_var):
+def k_fold_ols(data, k, dep_var, drop_var):
     kf = cross_val.KFold(data.shape[0], k=k)
     model = {}
     count = 0
@@ -67,11 +67,11 @@ def k_fold_valid(data, k, dep_var, drop_var):
     print(np.std(list(mape.values())))
 
 
-def hyperparameter_linear(data, reg_type, k, dep_var, drop_var):
+def hyperparameter_linear(data, k, dep_var, drop_var):
     tuned_parameters = [{'alpha': [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7,
                                    0.8, 0.9, 1.0]}]
     model = GridSearchCV(linear_model.Ridge(alpha=1.), tuned_parameters, cv=k)
     model.fit(data.drop([drop_var], axis=1, inplace=False), data[dep_var])
     sorted(model.cv_results_.keys())
-    model.cv_results_['mean_test_score']
-    model.cv_results_['mean_train_score']
+    print(model.cv_results_['mean_test_score'])
+    print(model.cv_results_['mean_train_score'])

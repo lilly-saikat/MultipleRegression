@@ -11,6 +11,9 @@ Created on Thu Aug 31 08:21:16 2017
 import numpy as np
 import os
 import pandas as po
+# For Standardization
+from scipy.stats.mstats import zscore
+
 
 # =============================================================================
 #  Define Location
@@ -50,3 +53,15 @@ def dummy(data, var):
                                                 prefix=var)], axis=1)
     new_data = temp_data.drop(var, axis=1)
     return new_data
+
+
+# =============================================================================
+# Create Standardization data
+# =============================================================================
+def stadardize(data, drop_vars, drop):
+    if drop == 1:
+        temp_data = data.drop(drop_vars, axis=1, inplace = False)
+        po.DataFram`e(zscore(temp_data), columns=temp_data.columns)
+    else:
+        po.DataFrame(zscore(data), columns=data.columns)
+    return data
